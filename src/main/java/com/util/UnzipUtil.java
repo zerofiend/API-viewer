@@ -69,6 +69,7 @@ public class UnzipUtil {
                 throw new RuntimeException(e);
             }
         }
+        System.out.println("文件解压成功");
         return unzipPath;
     }
 
@@ -123,6 +124,7 @@ public class UnzipUtil {
                 throw new RuntimeException(e);
             }
         }
+        System.out.println("文件解压成功");
         return unzipPath;
     }
 

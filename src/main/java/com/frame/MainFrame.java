@@ -33,7 +33,7 @@ public class MainFrame {
         //  自定义标题栏
         TitlePanel titlePanel = new TitlePanel(resizeFrame);
         //  设置菜单栏
-        MenuPanel menuPanel = new MenuPanel();
+        MenuPanel menuPanel = new MenuPanel(resizeFrame);
         //  顶部操作栏
         TopPanel topPanel = new TopPanel();
         topPanel.add(titlePanel, BorderLayout.NORTH);

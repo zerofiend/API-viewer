@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class FileTreeUtil {
             list.add(FileOrFolder);
         }
         String json = JSON.toJSONString(list);
-        File out = new File("src/main/resources/json/" + fileName + ".json");
+        File out = new File(String.valueOf(Paths.get(FIlePathUtil.JSON_PATH,
+                fileName + FIlePathUtil.JSON_POINT_SUFFIX)));
         OutputStream outputStream = null;
         try {
             outputStream = Files.newOutputStream(out.toPath());
@@ -50,7 +52,7 @@ public class FileTreeUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println("JSON生成成功");
     }
 
     /**

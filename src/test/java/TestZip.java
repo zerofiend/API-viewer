@@ -9,7 +9,7 @@ public class TestZip {
 
     @Test
     public void testZipReader() {
-        fileService.zipReader("D:\\JAVA\\jdk1.8.0_202\\src.zip");
+        fileService.zipReader("D:\\JAVA\\jdk1.8.0_202\\src.zip", "src");
     }
 
     @Test
@@ -19,7 +19,7 @@ public class TestZip {
 
     @Test
     public void testJarReader() {
-        fileService.jarReader("D:\\JAVA\\jdk1.8.0_202\\jre\\lib\\rt.jar");
+        fileService.jarReader("D:\\JAVA\\jdk1.8.0_202\\jre\\lib\\rt.jar", "rt");
     }
 
     @Test

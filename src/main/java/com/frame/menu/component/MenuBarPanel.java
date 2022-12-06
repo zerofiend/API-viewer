@@ -1,14 +1,22 @@
 package com.frame.menu.component;
 
+import com.frame.file.FilePanel;
+import com.service.FileService;
+import com.service.impl.FileServiceImpl;
 import com.util.ColorUtil;
+import com.util.FIlePathUtil;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.io.File;
 
 public class MenuBarPanel extends JMenuBar {
-    public MenuBarPanel() {
+    FileService fileService;
+
+    public MenuBarPanel(JFrame jFrame) {
+        fileService = new FileServiceImpl();
 //        this.setOpaque(false);
         this.setBackground(ColorUtil.setTransparent(0.15f));
         this.setBorder(new LineBorder(ColorUtil.BLUE_DEEP_3, 1));
@@ -98,7 +106,25 @@ public class MenuBarPanel extends JMenuBar {
         /*
           添加菜单的行为
          */
-        openMenuItem.addActionListener(e -> System.out.println("打开 被点击"));
+        openMenuItem.addActionListener(e -> {
+            //显示一个文件选择器
+            FilePanel filePanel = new FilePanel("D:");
+            filePanel.showOpenDialog(jFrame);
+            File file = filePanel.getSelectedFile();
+            if (file != null) {
+                //进行显示
+                String path = file.getPath();
+                String name = file.getName().split("\\.")[0];
+                String type = file.getName().split("\\.")[1];
+                if (type.equals(FIlePathUtil.ZIP_SUFFIX)) {
+                    fileService.zipReader(path, name);
+                } else if (type.equals(FIlePathUtil.JAR_SUFFIX)) {
+                    fileService.jarReader(path, name);
+                } else {
+                    System.out.println("文件格式错误！");
+                }
+            }
+        });
         exitMenuItem.addActionListener(e -> System.exit(0));
     }
 

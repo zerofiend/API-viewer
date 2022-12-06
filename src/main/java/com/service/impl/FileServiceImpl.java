@@ -1,24 +1,25 @@
 package com.service.impl;
 
 import com.service.FileService;
+import com.util.FIlePathUtil;
 import com.util.FileTreeUtil;
 import com.util.UnzipUtil;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class FileServiceImpl implements FileService {
-    private final String unzipPath = "src/main/resources/unzip";
 
     @Override
-    public void zipReader(String path) {
-        String unzipPath = UnzipUtil.unzip(path, this.unzipPath);
-        FileTreeUtil.getJsonByPath(unzipPath, "zip");
+    public void zipReader(String path, String filename) {
+        String unzipPath = UnzipUtil.unzip(path, String.valueOf(Paths.get(FIlePathUtil.UNZIP_PATH, filename)));
+        FileTreeUtil.getJsonByPath(unzipPath, filename);
     }
 
     @Override
-    public void jarReader(String path) {
-        String unJarPath = UnzipUtil.unJar(path, this.unzipPath);
-        FileTreeUtil.getJsonByPath(unJarPath, "jar");
+    public void jarReader(String path, String filename) {
+        String unJarPath = UnzipUtil.unJar(path, String.valueOf(Paths.get(FIlePathUtil.UNZIP_PATH, filename)));
+        FileTreeUtil.getJsonByPath(unJarPath, filename);
     }
 
     @Override

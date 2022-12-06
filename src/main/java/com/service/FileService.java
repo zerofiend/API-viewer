@@ -3,9 +3,9 @@ package com.service;
 import java.io.IOException;
 
 public interface FileService {
-    void zipReader(String path);
+    void zipReader(String path, String filename);
 
-    void jarReader(String path);
+    void jarReader(String path, String filename);
 
     void folderReader(String path);
 
