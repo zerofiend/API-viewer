@@ -1,11 +1,9 @@
 package com.frame;
 
-import com.frame.base.ResizeFrame;
-import com.frame.menu.MenuPanel;
-import com.frame.select.SelectPanel;
-import com.frame.title.TitlePanel;
-import com.frame.top.TopPanel;
-import com.frame.view.ViewPanel;
+import com.frame.base.BaseFrame;
+import com.frame.center.CenterPane;
+import com.frame.top.TopPane;
+import com.frame.transition.LoadingPane;
 import com.util.ColorUtil;
 
 import javax.swing.*;
@@ -14,36 +12,69 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+/**
+ * @Description TODO MainFrame 项目主界面
+ * @Author ZFiend
+ * @Create 2023.02.05 19:10
+ */
 public class MainFrame {
-    ResizeFrame resizeFrame;    //  基础界面
-    private Dimension resizeFrameSize;
+    static BaseFrame baseFrame;    //  基础界面
+    String icon = "src/main/resources/images/icon_white.png";
+//    public String filePath = "src/main/resources/unzip/src";
 
-    public void init() {
-        resizeFrame = new ResizeFrame(300, 200);
+    /**
+     * @description: TODO [MainFrame] 主界面构造函数
+     * @author: ZFiend
+     * @date: 2023/2/5 19:09
+     * @param:
+     * @return:
+     */
+    public MainFrame() {
+        //  设置自定义可伸缩窗口
+        baseFrame = new BaseFrame(300, 200);
+        //  设置窗口图标
+        ImageIcon imageIcon = new ImageIcon(icon);
+        baseFrame.setIconImage(imageIcon.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT));
         //  设置标题
-        resizeFrame.setTitle("API查看器");
+        baseFrame.setTitle("API查看器");
         //  设置布局方式
-        resizeFrame.setLayout(new BorderLayout());
+        baseFrame.setLayout(new BorderLayout());
         //  设置初始窗口大小
-        resizeFrame.setSize(1440, 810);
+        baseFrame.setSize(1440, 810);
         //  设置居中
-        resizeFrame.setLocation();
+        baseFrame.setLocation();
         // 去除标题栏
-        resizeFrame.setUndecorated(true);
-        //  自定义标题栏
-        TitlePanel titlePanel = new TitlePanel(resizeFrame);
-        //  设置菜单栏
-        MenuPanel menuPanel = new MenuPanel(resizeFrame);
-        //  顶部操作栏
-        TopPanel topPanel = new TopPanel();
-        topPanel.add(titlePanel, BorderLayout.NORTH);
-        topPanel.add(menuPanel, BorderLayout.SOUTH);
-        //  设置左侧选择栏
-        SelectPanel selectPanel = new SelectPanel();
-        //  设置右侧内容显示栏
-        ViewPanel viewPanel = new ViewPanel();
+        baseFrame.setUndecorated(true);
+        // 设置背景
+//        setBackgroundImage();
+        setBackgroundColor();
+    }
+
+    /**
+     * @description: TODO [setBackgroundColor] 设置背景颜色
+     * @author: ZFiend
+     * @date: 2023/2/5 22:02
+     * @param:
+     * @return: void
+     */
+    private void setBackgroundColor() {
+        //  设置背景颜色
+        JPanel jPanel = (JPanel) baseFrame.getContentPane();
+        jPanel.setBackground(ColorUtil.BLACK_DEEP_2);
+        jPanel.setBorder(new LineBorder(ColorUtil.PURPLE_TYPE_2, 1));
+        jPanel.setLayout(new BorderLayout()); //  使用绝对布局
+    }
+
+    /**
+     * @description: TODO [setBackgroundImage] 设置背景图片
+     * @author: ZFiend
+     * @date: 2023/2/5 19:09
+     * @param:
+     * @return: void
+     */
+    private void setBackgroundImage() {
         //  设置背景图片
-        JPanel jPanel = (JPanel) resizeFrame.getContentPane();
+        JPanel jPanel = (JPanel) baseFrame.getContentPane();
         jPanel.setOpaque(false);    //  将面板设置成透明
         jPanel.setBorder(new LineBorder(ColorUtil.BLUE_DEEP_3, 2));
         ImageIcon img = new ImageIcon("src/main/resources/images/background.jpeg");
@@ -53,28 +84,36 @@ public class MainFrame {
                 g.drawImage(img2, 0, 0, this.getWidth(), this.getHeight(), null);
             }
         };
-        resizeFrame.getLayeredPane().add(bg, Integer.valueOf(Integer.MIN_VALUE)); //  将label设置为最底层
+        baseFrame.getLayeredPane().add(bg, Integer.valueOf(Integer.MIN_VALUE)); //  将label设置为最底层
         bg.setBounds(0, 0, img.getIconWidth(), img.getIconHeight()); //  将label的大小设置为图片的大小
         jPanel.setLayout(new BorderLayout()); //  使用绝对布局
         jPanel.addComponentListener(new ComponentAdapter() {
             // 检测整个窗口大小是否改变
             @Override
             public void componentResized(ComponentEvent e) {
-                resizeFrameSize = resizeFrame.getSize();
-                bg.setSize(resizeFrameSize);
-                selectPanel.setPreferredSize(new Dimension((int) (resizeFrameSize.getWidth() * 0.3), -1));
-                viewPanel.setPreferredSize(new Dimension((int) (resizeFrameSize.getWidth() * 0.7), -1));
+                bg.setSize(baseFrame.getSize());
                 bg.repaint();   //  重新绘制图片
             }
         });
+    }
+
+    /**
+     * @description: TODO [init] 主界面初始化
+     * @author: ZFiend
+     * @date: 2023/2/5 19:10
+     * @param:
+     * @return: void
+     */
+    public void init() {
+        //  顶部面板
+        TopPane topPanel = new TopPane(baseFrame);
+        // 主面板
+        CenterPane centerPanel = CenterPane.getCenterPane();
         // 添加所有窗口
-//        jPanel.add(titlePanel, BorderLayout.NORTH);
-//        jPanel.add(menuPanel, BorderLayout.NORTH);
-        jPanel.add(topPanel, BorderLayout.NORTH);
-        jPanel.add(selectPanel, BorderLayout.WEST);
-        jPanel.add(viewPanel, BorderLayout.EAST);
+        baseFrame.add(topPanel, BorderLayout.NORTH);
+        baseFrame.add(centerPanel, BorderLayout.CENTER);
         //  运行显示窗口
-        resizeFrame.showFrame();
+        baseFrame.showFrame();
     }
 
     /**
@@ -106,4 +145,50 @@ public class MainFrame {
             // TODO: handle exception
         }
     }
+
+    private static LoadingPane loadingPane;
+
+    /**
+     * @description: TODO [createWait] 创建过渡面板
+     * @author: ZFiend
+     * @date: 2023/2/12 23:03
+     * @param: text
+     * @return: void
+     */
+    public static void createWait(String text) {
+        if (loadingPane == null) {
+            loadingPane = new LoadingPane();
+            loadingPane.setPreferredSize(new Dimension(200, 100));
+            baseFrame.setGlassPane(loadingPane);
+        }
+        loadingPane.setText(text);
+    }
+
+    /**
+     * @description: TODO [startWait] 启用过渡面板
+     * @author: ZFiend
+     * @date: 2023/2/12 23:03
+     * @param:
+     * @return: void
+     */
+    public static void startWait() {
+        if (loadingPane == null) {
+            System.out.println("未创建过渡面板");
+        } else {
+            loadingPane.start();
+        }
+    }
+
+    /**
+     * @description: TODO [stopWait] 停止过渡面板
+     * @author: ZFiend
+     * @date: 2023/2/12 23:03
+     * @param:
+     * @return: void
+     */
+    public static void stopWait() {
+        loadingPane.stop();
+    }
+
+
 }

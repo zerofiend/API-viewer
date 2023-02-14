@@ -15,19 +15,25 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
+/**
+ * @Description TODO UnzipUtil 解压工具类
+ * @Author ZFiend
+ * @Create 2023.02.05 19:10
+ */
 public class UnzipUtil {
-    /**
-     * Size of the buffer to read/write data
-     */
+    // 缓存大小
     private static final int BUFFER_SIZE = 4096;
 
     /**
-     * 解压缩 zip包
-     *
-     * @param path
-     * @param unzipPath
+     * @description: TODO [unzip] 解压 zip 压缩包
+     * @author: ZFiend
+     * @date: 2023/2/5 19:16
+     * @param: path
+     * @param: unzipPath
+     * @return: java.lang.String
      */
-    public static String unzip(String path, String unzipPath) {
+    public static String unzip(String path, String filename) {
+        String unzipPath = String.valueOf(Paths.get(FIlePathUtil.UNZIP_PATH, filename));
         boolean isExist = createFolder(path, unzipPath);
         if (isExist) {
             ZipInputStream zipIn = null;
@@ -62,7 +68,6 @@ public class UnzipUtil {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
             try {
                 zipIn.close();
             } catch (IOException e) {
@@ -74,10 +79,12 @@ public class UnzipUtil {
     }
 
     /**
-     * 解压缩Jar包
-     *
-     * @param path      Jar包路径
-     * @param unzipPath 解压缩路径
+     * @description: TODO [unJar] 解压 Jar 压缩包
+     * @author: ZFiend
+     * @date: 2023/2/5 19:16
+     * @param: path
+     * @param: unzipPath
+     * @return: java.lang.String
      */
     public static String unJar(String path, String unzipPath) {
         File file = new File(path);
@@ -129,15 +136,17 @@ public class UnzipUtil {
     }
 
     /**
-     * 创建压缩包解压根目录
-     *
-     * @param path      压缩包路径
-     * @param unzipPath 解压路径
+     * @description: TODO [createFolder] 创建压缩包根目录
+     * @author: ZFiend
+     * @date: 2023/2/5 19:17
+     * @param: path
+     * @param: unzipPath
+     * @return: boolean
      */
     private static boolean createFolder(String path, String unzipPath) {
         File file = new File(path);
         String name = file.getName();
-        unzipPath = String.valueOf(Paths.get(unzipPath, name));
+//        unzipPath = String.valueOf(Paths.get(unzipPath, name));
         File destDir = new File(unzipPath);
         if (!destDir.exists()) {
             destDir.mkdir();

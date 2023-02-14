@@ -7,14 +7,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 /**
- * 自定义窗口拖拽
+ * @Description TODO DragEventUtil  自定义窗口拖拽工具类
+ * @Author ZFiend
+ * @Create 2023.02.05 19:10
  */
 public class DragEventUtil {
     /**
-     * 目标拖拽事件
-     *
-     * @param moveComponent 被移动的组件
-     * @param dragTarget    点击进行移动的组件
+     * @description: TODO [initDragEvent] 目标拖拽事件
+     * @author: ZFiend
+     * @date: 2023/2/5 19:13
+     * @param: moveComponent
+     * @param: dragTarget
      * @return: void
      */
     public static void initDragEvent(Component moveComponent, Component dragTarget) {
