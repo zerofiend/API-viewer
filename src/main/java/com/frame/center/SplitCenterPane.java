@@ -1,6 +1,6 @@
 package com.frame.center;
 
-import com.frame.UI.SplitPaneUI;
+import com.frame.UI.MySplitPaneUI;
 import com.frame.center.left.LeftPane;
 import com.frame.center.right.RightPane;
 import com.util.ColorUtil;
@@ -27,7 +27,7 @@ public class SplitCenterPane extends JSplitPane {
      */
     public SplitCenterPane(String path) {
         // 设置背景透明
-        this.setBackground(ColorUtil.setTransparent(ColorUtil.BLUE_DEEP_5, 50));
+        this.setBackground(null);
         this.setOpaque(false);
         // 设置边框
         this.setBorder(new LineBorder(ColorUtil.BLACK_DEEP_2, 1));
@@ -42,6 +42,6 @@ public class SplitCenterPane extends JSplitPane {
         // 设置分隔条初始位置
         this.setDividerLocation(300);
         // 修改伸缩条ui样式
-        this.setUI(SplitPaneUI.createUI());
+        this.setUI(MySplitPaneUI.createUI());
     }
 }

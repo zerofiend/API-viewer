@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class TestZip {
+public class ZipTest {
     FileService fileService = new FileServiceImpl();
 
     @Test

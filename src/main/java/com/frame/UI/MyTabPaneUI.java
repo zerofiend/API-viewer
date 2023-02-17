@@ -7,13 +7,13 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class TabPaneUI extends JPanel implements MouseListener {
+public class MyTabPaneUI extends JPanel implements MouseListener {
 
     private final JTabbedPane pane;    // 所在选项卡窗格
 
     private final JLabel lab1, lab2;
 
-    public TabPaneUI(String title, JTabbedPane pane) {
+    public MyTabPaneUI(String title, JTabbedPane pane) {
         this.pane = pane;
         // 设置宽度
         this.setPreferredSize(new Dimension(70, 20));
@@ -45,7 +45,7 @@ public class TabPaneUI extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
         JOptionPane option = new JOptionPane();
-        option.setUI(new OptionPaneUI());
+        option.setUI(new MyOptionPaneUI());
         int confirm = option.showConfirmDialog(this.pane, "确认关闭选项卡", "提示", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             this.pane.remove(this.pane.indexOfTabComponent(this));

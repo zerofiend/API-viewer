@@ -1,5 +1,9 @@
 package com.frame.top.menu.component;
 
+import com.frame.UI.MyMenuItemUI;
+import com.frame.UI.MyMenuUI;
+import com.frame.UI.MyPopupMenuUI;
+import com.frame.UI.MySeparatorUI;
 import com.frame.action.OpenFileAction;
 import com.service.FileService;
 import com.service.impl.FileServiceImpl;
@@ -36,11 +40,11 @@ public class MenuBarPane extends JMenuBar {
         /*
          * 创建一级菜单
          */
-        JMenu fileMenu = new JMenu("<html><span color=#c6e2ff style=\"font-size:12px;\">文件</span></html>");
-        JMenu editMenu = new JMenu("<html><span color=#c6e2ff style=\"font-size:12px;\">编辑</span></html>");
-        JMenu guideMenu = new JMenu("<html><span color=#c6e2ff style=\"font-size:12px;\">导航</span></html>");
-        JMenu searchMenu = new JMenu("<html><span color=#c6e2ff style=\"font-size:12px;\">查找</span></html>");
-        JMenu helpMenu = new JMenu("<html><span color=#c6e2ff style=\"font-size:12px;\">帮助</span></html>");
+        JMenu fileMenu = new JMenu("文件");
+        JMenu editMenu = new JMenu("编辑");
+        JMenu guideMenu = new JMenu("导航");
+        JMenu searchMenu = new JMenu("查找");
+        JMenu helpMenu = new JMenu("帮助");
         // 一级菜单样式设置
         setMenuTheme(fileMenu, editMenu, guideMenu, searchMenu, helpMenu);
         // 一级菜单添加到菜单栏
@@ -54,13 +58,22 @@ public class MenuBarPane extends JMenuBar {
         JMenuItem openReMenuItem = new JMenuItem("打开最近");
         JMenuItem closeMenuItem = new JMenuItem("关闭");
         JMenuItem exitMenuItem = new JMenuItem("退出");
+        // 设置图标
+        ImageIcon openIcon = new ImageIcon("src/main/resources/images/open_white.png");
+        openIcon = new ImageIcon(openIcon.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        openMenuItem.setIcon(openIcon);
+
+        ImageIcon exitIcon = new ImageIcon("src/main/resources/images/exit_white.png");
+        exitIcon = new ImageIcon(exitIcon.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+        exitMenuItem.setIcon(exitIcon);
+
 
         // 设置子菜单的样式
         setMenuItemTheme(newMenuItem, openMenuItem, openReMenuItem, closeMenuItem, exitMenuItem);
 
         // 子菜单添加到一级菜单
         addMenuItems(fileMenu, newMenuItem, openMenuItem, openReMenuItem);
-        fileMenu.addSeparator();
+        fileMenu.add(new MySeparatorUI());
         addMenuItems(fileMenu, closeMenuItem, exitMenuItem);
 
         /*
@@ -76,7 +89,7 @@ public class MenuBarPane extends JMenuBar {
         setMenuItemTheme(cancelMenuItem, renewalMenuItem, copyReMenuItem, shearMenuItem, pasteMenuItem);
         // 子菜单添加到一级菜单
         addMenuItems(editMenu, cancelMenuItem, renewalMenuItem);
-        editMenu.addSeparator();
+        editMenu.add(new MySeparatorUI());
         addMenuItems(editMenu, shearMenuItem, copyReMenuItem, pasteMenuItem);
 
         /*
@@ -112,7 +125,7 @@ public class MenuBarPane extends JMenuBar {
         setMenuItemTheme(helpMenuItem, registerMenuItem, updateMenuItem, aboutMenuItem);
         // 子菜单添加到一级菜单
         addMenuItems(helpMenu, helpMenuItem);
-        helpMenu.addSeparator();
+        helpMenu.add(new MySeparatorUI());
         addMenuItems(helpMenu, registerMenuItem, updateMenuItem, aboutMenuItem);
         // 添加菜单行为
         openMenuItem.addActionListener(new OpenFileAction(jFrame));
@@ -128,6 +141,10 @@ public class MenuBarPane extends JMenuBar {
         for (JMenu jMenu : jMenus) {
             jMenu.setFont(new Font("微软雅黑", Font.BOLD, 16));
             jMenu.setBorder(new EmptyBorder(0, 10, 0, 10));
+            jMenu.setForeground(ColorUtil.WHITE);
+            jMenu.getPopupMenu().setBorder(new LineBorder(ColorUtil.BLACK_DEEP_1));
+            jMenu.getPopupMenu().setUI(new MyPopupMenuUI());
+            jMenu.setUI(new MyMenuUI());
         }
     }
 
@@ -144,9 +161,13 @@ public class MenuBarPane extends JMenuBar {
      */
     private static void setMenuItemTheme(JMenuItem... jMenuItems) {
         for (JMenuItem jMenuItem : jMenuItems) {
-            jMenuItem.setPreferredSize(new Dimension(120, 25));
-            jMenuItem.setBorder(new EmptyBorder(0, 20, 0, 0));
-            jMenuItem.setFont(new Font("微软雅黑", Font.BOLD, 16));
+            jMenuItem.setPreferredSize(new Dimension(200, 30));
+            jMenuItem.setBackground(null);
+            jMenuItem.setOpaque(false);
+            jMenuItem.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+            jMenuItem.setBorder(new LineBorder(ColorUtil.BLACK_DEEP_5));
+            jMenuItem.setForeground(ColorUtil.WHITE);
+            jMenuItem.setUI(new MyMenuItemUI());
         }
     }
 
@@ -159,6 +180,7 @@ public class MenuBarPane extends JMenuBar {
     private static void addMenuItems(JMenu jMenu, JMenuItem... jMenuItems) {
         for (JMenuItem jMenuItem : jMenuItems) {
             jMenu.add(jMenuItem);
+//            jMenuItem.paintComponents();
         }
     }
 }

@@ -9,7 +9,7 @@ import javax.swing.plaf.basic.BasicOptionPaneUI;
  * @Author ZFiend
  * @Create 2023.02.11 20:56
  */
-public class OptionPaneUI extends BasicOptionPaneUI {
+public class MyOptionPaneUI extends BasicOptionPaneUI {
     /**
      * @description: TODO [OptionPaneUI] 构造函数
      * @author: ZFiend
@@ -17,7 +17,7 @@ public class OptionPaneUI extends BasicOptionPaneUI {
      * @param:
      * @return:
      */
-    public OptionPaneUI() {
+    public MyOptionPaneUI() {
         super();
     }
 
@@ -29,6 +29,6 @@ public class OptionPaneUI extends BasicOptionPaneUI {
      * @return: javax.swing.plaf.ComponentUI
      */
     public static ComponentUI createUI(JComponent c) {
-        return new OptionPaneUI();
+        return new MyOptionPaneUI();
     }
 }

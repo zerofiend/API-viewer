@@ -17,8 +17,6 @@ public class MenuPane extends JPanel {
     public MenuPane(JFrame jFrame, JPanel selectPanel) {
         // 设置布局
         this.setLayout(new BorderLayout());
-        // 设置边框
-//        this.setBorder(new EmptyBorder(5, 5, 0, 5));
         // 设置背景透明
         this.setBackground(ColorUtil.setTransparent(0));
         // 添加菜单栏

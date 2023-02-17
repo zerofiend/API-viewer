@@ -2,7 +2,6 @@ package com.service.impl;
 
 import com.entity.FileOrFolder;
 import com.frame.MainFrame;
-import com.frame.center.right.text.ViewTextPane;
 import com.service.FileService;
 import com.util.FIlePathUtil;
 import com.util.FileJSONUtil;
@@ -10,8 +9,12 @@ import com.util.UnzipUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class FileServiceImpl implements FileService {
     List<FileOrFolder> fileList;
@@ -42,7 +45,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void javaShow(String path) {
+    public String javaShow(String path) {
+        String absolutePath = null;
         String filePath = Paths.get(FIlePathUtil.UNZIP_PATH, path).toString();
         String docPath = Paths.get(FIlePathUtil.JAVADOC_PATH, path).toString();
         // 文件加载时动画
@@ -57,26 +61,68 @@ public class FileServiceImpl implements FileService {
             while (!file.exists()) {
                 file = Paths.get(docPath, "index.html").toFile();
             }
-            String absolutePath = "file:" + file.getAbsolutePath();
-            try {
-                ViewTextPane.getViewTextPane().setPage(absolutePath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            absolutePath = "file:" + file.getAbsolutePath();
         }
         MainFrame.stopWait();
+        return absolutePath;
     }
 
     @Override
-    public void classShow(String path) {
-        String filePath = Paths.get("unzip", path).toString();
-        filePath = filePath.replaceAll("\\\\", ".");
-        filePath = filePath.substring(0, filePath.lastIndexOf("."));
-        System.out.println(filePath);
+    public String classShow(String path) {
+        String filePath = path.replace("/", "\\").replace(FIlePathUtil.UNZIP_PATH + "\\", "");
+        String jarPath = filePath.substring(0, filePath.indexOf("\\")) + "." + FIlePathUtil.JAR_SUFFIX;
+        filePath = filePath.substring(filePath.indexOf("\\") + 1);
+        StringBuilder sb = new StringBuilder();
         try {
-            Class<?> aClass = Class.forName(filePath);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("未找到Class文件");
+            JarFile jarFile = new JarFile(Paths.get(FIlePathUtil.JAR_PATH, jarPath).toString());
+
+            Enumeration<JarEntry> e = jarFile.entries();
+
+            JarEntry entry;
+            while (e.hasMoreElements()) {
+                entry = (JarEntry) e.nextElement();
+                //
+                if (!entry.getName().contains("META-INF") && entry.getName().equals(filePath.replaceAll("\\\\",
+                        "/"))) {
+                    String classFullName = entry.getName();
+                    //去掉后缀.class
+                    String className = classFullName.substring(0, classFullName.length() - 6).replace("/", ".");
+                    sb.append(className).append("\n");
+                    System.out.println(className);
+
+                    Class<?> c = null;
+                    try {
+                        try {
+                            // 用className这个类来装载c,但还没有实例化
+                            c = Class.forName(className);
+                        } catch (ClassNotFoundException e1) {
+                            e1.printStackTrace();
+                        }
+                        Method[] methods = c.getMethods();
+                        for (Method method : methods) {
+                            String methodName = method.getName();
+                            System.out.println("方法名称:" + methodName);
+                            System.out.println("返回值类型" + method.getReturnType());
+                            sb.append("方法名称:").append(methodName).append("\n");
+                            sb.append("返回值类型").append(method.getReturnType()).append("\n");
+                            Class<?>[] parameterTypes = method.getParameterTypes();
+                            for (Class<?> clas : parameterTypes) {
+                                // String parameterName = clas.getName();
+                                String parameterName = clas.getSimpleName();
+                                System.out.println("参数类型:" + parameterName);
+                                sb.append("参数类型:").append(parameterName).append("\n");
+                            }
+                            System.out.println("==========================");
+                            sb.append("==========================").append("\n");
+                        }
+                    } catch (SecurityException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return sb.toString();
     }
 }

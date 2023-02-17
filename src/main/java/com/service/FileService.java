@@ -11,7 +11,7 @@ public interface FileService {
 
     void zipShow(String path) throws IOException;
 
-    void javaShow(String path);
+    String javaShow(String path);
 
-    void classShow(String path);
+    String classShow(String path);
 }

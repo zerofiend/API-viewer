@@ -22,7 +22,6 @@ public class BaseFrame extends JFrame {
         this.min_height = min_height;
         this.min_width = min_width;
 
-        //2021/5/26 bug fix  : 鼠标离开页面后重新设置鼠标样式，解决鼠标移开之后，点击任务栏中的应用进行最小化，再次点击后应用显示，造成鼠标依然显示上一次在边界位置的样式。
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExited(MouseEvent e) {

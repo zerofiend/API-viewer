@@ -12,7 +12,7 @@ import java.awt.*;
  * @Author ZFiend
  * @Create 2023.02.10 19:12
  */
-public class SplitPaneUI extends BasicSplitPaneUI {
+public class MySplitPaneUI extends BasicSplitPaneUI {
     private static final Color backgroundColor = ColorUtil.BLACK_DEEP_2;    // 分隔栏背景色
     private static final Color borderColor = ColorUtil.BLACK_DEEP_1;    // 分隔栏边框色
 
@@ -23,7 +23,7 @@ public class SplitPaneUI extends BasicSplitPaneUI {
      * @param:
      * @return:
      */
-    public SplitPaneUI() {
+    public MySplitPaneUI() {
         super();
     }
 
@@ -35,7 +35,7 @@ public class SplitPaneUI extends BasicSplitPaneUI {
      * @return: javax.swing.plaf.ComponentUI
      */
     public static ComponentUI createUI() {
-        return new SplitPaneUI();
+        return new MySplitPaneUI();
     }
 
     /**
@@ -51,7 +51,7 @@ public class SplitPaneUI extends BasicSplitPaneUI {
     }
 
     private static class MyBasicSplitPaneDivider extends BasicSplitPaneDivider {
-        public MyBasicSplitPaneDivider(SplitPaneUI ui) {
+        public MyBasicSplitPaneDivider(MySplitPaneUI ui) {
             super(ui);
         }
 

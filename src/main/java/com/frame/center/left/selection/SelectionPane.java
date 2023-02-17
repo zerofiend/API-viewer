@@ -1,7 +1,7 @@
 package com.frame.center.left.selection;
 
+import com.frame.UI.MyScrollBarUI;
 import com.frame.action.SelectFileAction;
-import com.frame.UI.ScrollBarUI;
 
 import javax.swing.*;
 
@@ -26,15 +26,13 @@ public class SelectionPane extends JScrollPane {
         this.setOpaque(false);
         //  设置边框
         this.setBorder(null);
-        //  设置初始大小
-//        this.setPreferredSize(new Dimension(400, -1));
         //  读取文件内容
         fileListTree = FileListTree.init(path);
         fileListTree.addMouseListener(new SelectFileAction(fileListTree));
         this.getViewport().add(fileListTree);
         // 设置自定义滚动条
-        this.getVerticalScrollBar().setUI(ScrollBarUI.createUI());
-        this.getHorizontalScrollBar().setUI(ScrollBarUI.createUI());
+        this.getVerticalScrollBar().setUI(MyScrollBarUI.createUI());
+        this.getHorizontalScrollBar().setUI(MyScrollBarUI.createUI());
     }
 
     public void init(String path) {

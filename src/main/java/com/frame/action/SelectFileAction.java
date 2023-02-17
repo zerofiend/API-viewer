@@ -1,6 +1,6 @@
 package com.frame.action;
 
-import com.frame.center.right.text.ViewTextPane;
+import com.frame.center.right.RightPane;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -35,7 +35,7 @@ public class SelectFileAction implements MouseListener {
                 }
                 String filePath = sb.toString();
                 if (filePath.endsWith(".class") || filePath.endsWith(".java")) {
-                    ViewTextPane.addText(filePath);
+                    RightPane.addText(filePath);
                 }
             }
         }

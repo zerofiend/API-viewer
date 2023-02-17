@@ -1,7 +1,5 @@
 package com.frame.center.right.text;
 
-import com.service.FileService;
-import com.service.impl.FileServiceImpl;
 import com.util.ColorUtil;
 
 import javax.swing.*;
@@ -12,17 +10,8 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLFrameHyperlinkEvent;
 
 public class ViewTextPane extends JEditorPane {
-    private static ViewTextPane viewTextPane;
-    private static FileService fileService = new FileServiceImpl();
 
-    public static ViewTextPane getViewTextPane() {
-        if (viewTextPane == null) {
-            viewTextPane = new ViewTextPane();
-        }
-        return viewTextPane;
-    }
-
-    private ViewTextPane() {
+    public ViewTextPane() {
         //设置背景透明
         this.setBackground(ColorUtil.BLACK_DEEP_4);
         // 设置边框
@@ -48,13 +37,5 @@ public class ViewTextPane extends JEditorPane {
                 }
             }
         });
-    }
-
-    public static void addText(String path) {
-        if (path.endsWith(".java")) {
-            fileService.javaShow(path);
-        } else {
-            fileService.classShow(path);
-        }
     }
 }

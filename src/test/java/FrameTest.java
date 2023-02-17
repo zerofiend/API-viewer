@@ -1,7 +1,7 @@
 import com.frame.MainFrame;
 import org.junit.Test;
 
-public class TestFrame {
+public class FrameTest {
     MainFrame mainFrame = new MainFrame();
 
     @Test

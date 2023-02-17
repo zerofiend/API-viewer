@@ -7,16 +7,17 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 
 /**
- * @Description TODO TabbedPaneUI
+ * @Description TODO RightPaneUI
  * @Author ZFiend
- * @Create 2023.02.06 23:17
+ * @Create 2023.02.14 23:45
  */
-public class CenterPaneUI extends BasicTabbedPaneUI {
+public class MyRightPaneUI extends BasicTabbedPaneUI {
     private Color defaultColor = ColorUtil.BLACK_DEEP_3;
 
     private Color selectedColor = ColorUtil.BLACK_DEEP_2;
     private Color defaultBorderColor = ColorUtil.BLACK_DEEP_1;
     private Color selectedBorderColor = ColorUtil.PURPLE_TYPE_2;
+    private Color backgroundColor = ColorUtil.BLACK_DEEP_5;
 
     private int select_x = 0;
     private int select_y = 0;
@@ -31,7 +32,7 @@ public class CenterPaneUI extends BasicTabbedPaneUI {
      * @return: javax.swing.plaf.ComponentUI
      */
     public static ComponentUI createUI() {
-        return new CenterPaneUI();
+        return new MyCenterPaneUI();
     }
 
     /**
@@ -152,8 +153,6 @@ public class CenterPaneUI extends BasicTabbedPaneUI {
     }
 
     protected LayoutManager createLayoutManager() {
-
-
         return new TabbedPaneLayout();
 
     }// 设置Layout
@@ -218,73 +217,4 @@ public class CenterPaneUI extends BasicTabbedPaneUI {
             contentBorderInsets = new Insets(0, 0, 0, 0);
         }
     }
-
-    /*    /**
-     * @description: TODO [paintContentBorder] 设置主题内容边框
-     * @author: ZFiend
-     * @date: 2023/2/6 23:48
-     * @param: g
-     * @param: tabPlacement
-     * @param: selectedIndex
-     * @return: void
-     *//*
-    protected void paintContentBorder(Graphics g, int tabPlacement,
-                                      int selectedIndex) {
-        int width = tabPane.getWidth();
-        int height = tabPane.getHeight();
-        Insets insets = tabPane.getInsets();
-        Insets tabAreaInsets = getTabAreaInsets(tabPlacement);
-
-        int x = insets.left;
-        int y = insets.top;
-        int w = width - insets.right - insets.left;
-        int h = height - insets.top - insets.bottom;
-
-        switch (tabPlacement) {
-            case LEFT:
-                x += calculateTabAreaWidth(tabPlacement, runCount, maxTabWidth);
-
-                w -= (x - insets.left);
-                break;
-            case RIGHT:
-                w -= calculateTabAreaWidth(tabPlacement, runCount, maxTabWidth);
-
-                w += tabAreaInsets.left;
-
-                break;
-            case BOTTOM:
-                h -= calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight);
-
-                h += tabAreaInsets.top;
-
-                break;
-            case TOP:
-
-
-            default:
-                y += calculateTabAreaHeight(tabPlacement, runCount, maxTabHeight);
-
-                y -= tabAreaInsets.bottom;
-
-                h -= (y - insets.top);
-        }
-
-        // Fill region behind content area
-        Color color = UIManager.getColor("TabbedPane.contentAreaColor");
-        if (color != null) {
-            g.setColor(color);
-        } else if (selectedColor == null) {
-            g.setColor(tabPane.getBackground());
-        } else {
-            g.setColor(selectedColor);
-        }
-        g.fillRect(x, y, w, h);
-        g.setColor(selectedColor);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setStroke(new BasicStroke(10.0f));
-
-        g.drawLine(x + 6, y + 5, w, y + 5);
-        g2d.setStroke(new BasicStroke(1.0f));
-
-    }*/
 }

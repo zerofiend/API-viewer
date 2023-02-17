@@ -12,7 +12,7 @@ import java.awt.*;
  * @Create 2023.02.05 19:10
  */
 
-public class ScrollBarUI extends BasicScrollBarUI {
+public class MyScrollBarUI extends BasicScrollBarUI {
 
     // 手柄宽度
     private static final int thumbWidth = 10;
@@ -40,7 +40,7 @@ public class ScrollBarUI extends BasicScrollBarUI {
      * @return: javax.swing.plaf.ComponentUI
      */
     public static javax.swing.plaf.ScrollBarUI createUI() {
-        return new ScrollBarUI();
+        return new MyScrollBarUI();
     }
 
     /**

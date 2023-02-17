@@ -8,6 +8,8 @@ package com.util;
 public class FIlePathUtil {
     //  解压路径
     public static String UNZIP_PATH = "src\\main\\resources\\unzip";
+    // jar包路径
+    public static String JAR_PATH = "lib";
     // javadoc路径
     public static String JAVADOC_PATH = "src\\main\\resources\\doc";
     //  JSON文件路径

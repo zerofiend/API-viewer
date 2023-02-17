@@ -5,14 +5,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.entity.FileOrFolder;
 import org.apache.commons.io.FileUtils;
 
-import java.io.*;
-import java.nio.charset.Charset;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 /**
  * @Description TODO FileJSONUtil 生成文件路径JSON文件
@@ -21,39 +20,7 @@ import java.util.zip.ZipInputStream;
  */
 public class FileJSONUtil {
     private int sid;
-
-    /**
-     * @description: TODO [getJsonByZip] 通过zip压缩包生成文件结构JSON文件
-     * @author: ZFiend
-     * @date: 2023/2/14 15:17
-     * @param: directory
-     * @param: fileName
-     * @return: void
-     */
-    public static void getJsonByJar(String directory, String fileName) {
-//获取文件输入流
-        FileInputStream input = null;
-        ZipInputStream zipInputStream = null;
-        try {
-            input = new FileInputStream(directory);        //获取ZIP输入流(一定要指定字符集Charset.forName("GBK")否则会报java.lang
-            // .IllegalArgumentException: MALFORMED)
-            zipInputStream = new ZipInputStream(new BufferedInputStream(input), Charset.forName("GBK"));
-            //定义ZipEntry置为null,避免由于重复调用zipInputStream.getNextEntry造成的不必要的问题
-            ZipEntry ze = null;
-            //循环遍历
-            while ((ze = zipInputStream.getNextEntry()) != null) {
-                System.out.println("文件名：" + ze.getName() + " 文件大小：" + ze.getSize() + " bytes");
-            }
-            //一定记得关闭流
-            zipInputStream.closeEntry();
-            input.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    
     /**
      * @description: TODO [getJsonByPath] 通过文件夹路径生成文件结构 JSON 文件
      * @author: ZFiend
